@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Performance</title>
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css" id="theme">
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<section>
+					<h1>Web Performance</h1>
+					<p>A battle against the laws of physics</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>The goal</h1>
+				</section>
+				<section>
+					<h2>Percieved Performance</h2>
+					<ul>
+						<li>0.1 sec - Instant</li>
+						<li>&lt; 1 sec - Keep attention</li>
+						<li>1-10 sec - WTF?</li>
+						<li>&gt; 10 sec - Lost attention</li>
+					</ul>
+					<aside class="notes">
+						http://blog.teamtreehouse.com/perceived-performances
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>Static Rendering</h1>
+					<p>Dreams of an old school backender</p>
+				</section>
+				<section>
+					<h2>Hypothesis</h2>
+					<ul>
+						<li>Static rendering preferable over SPAs</li>
+						<li>Write simple and testable code in your favourite language</li>
+						<li>Leverage turbolinks to hide page/asset reload cycle</li>
+						<li>Render to glass in < 100ms</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Rails performance in general</h2>
+					<ul>
+						<li>Middleware stack ~20ms</li>
+						<li>Fetching minor payloads from database ~2ms</li>
+						<li>Rendering an erb template ~20ms</li>
+						<li>Can add up pretty fast</li>
+						<li>People solve this with caching (hard)</li>
+						<li>Not the best concurrency scenario (unless jruby)</li>
+						<li>Any alterantives?</li>
+					</ul>
+				</section>
+				<section>
+					<img src="/images/framework-comparison.png" alt="">
+					<aside class="notes">
+						https://github.com/mroth/phoenix-showdown
+
+						So rails adds about 20ms to every production request (not seen in logs!).
+
+						Possible to get an order of magnitude better performance in compiled languages.
+
+						Realize that Ruby and Rails was always about sacrificing performance for developer happiness!
+					</aside>
+				</section>
+				<section>
+					<h2>So...</h2>
+					<ul>
+						<li>Phoenix (elixir) does most of what rails does at 10x the performance</li>
+						<li>Startram (crystal) has potential to do it at 50x the performance</li>
+						<li>Sub 100ms render should be easy - mission completed?</li>
+					</ul>
+				</section>
+				<section data-background-video="videos/hyperdrive.mp4"></section>
+				<section>
+					<img src="/images/latency-1.png" alt="">
+				</section>
+			</section>
+			<section>
+				<section>
+					<h2>Teh Intranets</h2>
+					<img src="/images/repair.jpg" alt="">
+					<p>No hyperdrive<br>Stuck at the speed of light</p>
+				</section>
+				<section>
+					<h2>Speed of Light, in theory</h2>
+					<ul>
+						<li>299,792km per second</li>
+						<li>Stockholm -> N. Virginia distance 7,000km</li>
+						<li>Should take 23ms</li>
+						<li>Stockholm -> Dublin distance 2,000km</li>
+						<li>Should take 6ms</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Speed of Light, in reality</h2>
+					<ul>
+						<li>Zig zagging infrastructure</li>
+						<li>Routers add latency</li>
+						<li>Light moves 30% slower in glass</li>
+						<li>Pinballing through the fiber</li>
+						<li>About twice as slow</li>
+					</ul>
+					<aside class="notes">
+						Routers - like going through customs
+
+						http://royal.pingdom.com/2007/06/01/theoretical-vs-real-world-speed-limit-of-ping/
+					</aside>
+				</section>
+				<section>
+					<h2>Speed of Light, in practice</h2>
+					<ul>
+						<li>Ping Dublin ~50ms</li>
+						<li>Ping N. Virginia ~130ms</li>
+						<li>So what's up with 750ms?</li>
+					</ul>
+					<aside class="notes">
+						So we should
+						http://www.cloudping.info/
+					</aside>
+				</section>
+				<section>
+					<img src="/images/latency-2.png" alt="">
+					<aside class="notes">
+						1x rt - you're not getting anything until we have encryption
+						2x rt - encryption handshake
+						1x rt - get actual server response
+						Wait for content
+					</aside>
+				</section>
+				<section>
+					<h2>Speed of light, on https</h2>
+					<ul>
+						<li>4 round trips for first response</li>
+						<li>Similar handshakes for asset loading</li>
+						<li>VERY slow first render</li>
+						<li>Optimization 1: Browser will cache connections</li>
+						<li>Optimization 2: HTTP/2 requires only one connection</li>
+						<li>Still adds ~140ms roundtrip for each request</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Example of H2 via Cloudflare</h3>
+					<img src="/images/h2-latency-1.png" alt="">
+					<aside class="notes">
+						When using cloudflare enabled domain http2 is used and only one connection is created.
+						Assets are then pipelined. About half the time to load assets.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>Single Page Apps</h1>
+					<p>Nothing will stand in our way</p>
+				</section>
+				<section>
+					<h2>Beating the speed of light</h2>
+					<ul>
+						<li>Optimistic Updates</li>
+						<li>Client side data caching</li>
+						<li>Websockets</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Challenges</h2>
+					<ul>
+						<li>Two way replication</li>
+						<li>Stateful servers</li>
+						<li>Persistent connections</li>
+					</ul>
+					<aside class="notes">
+						If we never reload, how do we get fresh data?
+						If we need fresh data, servers need to know where we're at
+						Scaling persistent connections very different from polling
+					</aside>
+				</section>
+				<section>
+					<h2>Solutions</h2>
+					<ul>
+						<li>Meteor (the only complete package)</li>
+						<li>Phoenix (websocket pub/sub, massive scalability)</li>
+						<li>Relay (graphql + react with optimistic updates)</li>
+						<li>Firebase (cloud store with live queries)</li>
+						<li>Om (optimistic updates, coolest kid on the block)</li>
+						<li>Dato (ambitious clojurescript project)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Scalability concerns</h2>
+					<ul>
+						<li>Sticky sessions</li>
+						<li>Paas might limit number of open connections</li>
+						<li>Live query computation is expensive (meteor)</li>
+						<li>Javascript isn't multi threaded and hard to optimize (node)</li>
+					</ul>
+					<aside class="notes">
+						Paas like heroku is known to handle 6000 connections per dyno
+					</aside>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h1>Conclusion</h1>
+				</section>
+				<section>
+					<h2>The best is yet to come</h2>
+					<ul>
+						<li>Doable but hard to be productive</li>
+						<li>Use Meteor or roll your own (not trivial)</li>
+						<li>Moving toward game style network programming</li>
+						<li>Isomorphic Clojure or Elixir might make for an optimal solution?</li>
+					</ul>
+				</section>
+				<section data-background-video="videos/actual-hyperdrive.mp4">
+				</section>
+				<section class="star-wars">
+					<h2>Thank you!</h2>
+					<p>💗</p>
+				</section>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+
+	// Full list of configuration options available here:
+	// https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		width: 1140,
+    height: 900,
+		controls: true,
+		progress: true,
+		history: true,
+		center: true,
+
+		theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+		transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+		// Parallax scrolling
+		// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+		// parallaxBackgroundSize: '2100px 900px',
+
+		// Optional libraries used to extend on reveal.js
+		dependencies: [
+		{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+		{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+		{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+		{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+		{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+		]
+	});
+
+</script>
+
+</body>
+</html>
