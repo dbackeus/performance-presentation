@@ -6,6 +6,12 @@
 	<link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/black.css" id="theme">
 	<link rel="stylesheet" href="lib/css/zenburn.css">
+	<style>
+	.reveal .slides section .fragment {
+		opacity: 0.2;
+		visibility: visible;
+	}
+	</style>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
@@ -73,7 +79,7 @@
 					</aside>
 				</section>
 				<section>
-					<h2>So...</h2>
+					<h2>Looking good</h2>
 					<ul>
 						<li class="fragment">Phoenix (elixir) does most of what rails does at 10x the performance</li>
 						<li class="fragment">Startram (crystal) has potential to do it at 50x the performance</li>
@@ -188,17 +194,17 @@
 					<ul>
 						<li class="fragment">Meteor (the only complete package)</li>
 						<li class="fragment">Phoenix (websocket pub/sub, massive scalability)</li>
-						<li class="fragment">Relay (graphql + react with optimistic updates)</li>
+						<li class="fragment">Relay (graphql with optimistic updates)</li>
 						<li class="fragment">Firebase (cloud store with live queries)</li>
 						<li class="fragment">Om (optimistic updates, coolest kid on the block)</li>
-						<li class="fragment">Dato (ambitious clojurescript project)</li>
+						<li class="fragment">Dato (next gen meteor... in theory)</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Scalability concerns</h2>
 					<ul>
 						<li class="fragment">Sticky sessions</li>
-						<li class="fragment">Paas might limit number of open connections</li>
+						<li class="fragment">PaaS might limit number of open connections</li>
 						<li class="fragment">Live query computation is expensive (meteor)</li>
 						<li class="fragment">Javascript isn't multi threaded and hard to optimize (node)</li>
 					</ul>
@@ -225,6 +231,17 @@
 				<section class="star-wars">
 					<h2>Thank you!</h2>
 					<p>💗</p>
+					<small>
+					<ul>
+						<li><a href="https://github.com/mroth/phoenix-showdown">Web framework showdown</a></li>
+						<li><a href="http://blog.teamtreehouse.com/perceived-performance">Perceived performance</a></li>
+						<li><a href="http://www.cloudping.info/">Cloud ping</a></li>
+						<li><a href="https://www.meteor.com/">Meteor</a></li>
+						<li><a href="https://github.com/omcljs/om/wiki#om-next">Om Next</a></li>
+						<li><a href="http://www.phoenixframework.org/">Phoenix</a></li>
+						<li><a href="https://github.com/startram/startram">Startram</a></li>
+					</ul>
+					</small
 				</section>
 			</section>
 		</div>
