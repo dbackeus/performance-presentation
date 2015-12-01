@@ -24,10 +24,10 @@
 				<section>
 					<h2>Percieved Performance</h2>
 					<ul>
-						<li>0.1 sec - Instant</li>
-						<li>&lt; 1 sec - Keep attention</li>
-						<li>1-10 sec - WTF?</li>
-						<li>&gt; 10 sec - Lost attention</li>
+						<li class="fragment">0.1 sec - Instant</li>
+						<li class="fragment">&lt; 1 sec - Keep attention</li>
+						<li class="fragment">1-10 sec - WTF?</li>
+						<li class="fragment">&gt; 10 sec - Lost attention</li>
 					</ul>
 					<aside class="notes">
 						http://blog.teamtreehouse.com/perceived-performances
@@ -42,22 +42,22 @@
 				<section>
 					<h2>Hypothesis</h2>
 					<ul>
-						<li>Static rendering preferable over SPAs</li>
-						<li>Write simple and testable code in your favourite language</li>
-						<li>Leverage turbolinks to hide page/asset reload cycle</li>
-						<li>Render to glass in < 100ms</li>
+						<li class="fragment">Static rendering preferable over SPAs</li>
+						<li class="fragment">Write simple and testable code in your favourite language</li>
+						<li class="fragment">Leverage turbolinks to hide page/asset reload cycle</li>
+						<li class="fragment">Render to glass in < 100ms</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Rails performance in general</h2>
 					<ul>
-						<li>Middleware stack ~20ms</li>
-						<li>Fetching minor payloads from database ~2ms</li>
-						<li>Rendering an erb template ~20ms</li>
-						<li>Can add up pretty fast</li>
-						<li>People solve this with caching (hard)</li>
-						<li>Not the best concurrency scenario (unless jruby)</li>
-						<li>Any alterantives?</li>
+						<li class="fragment">Middleware stack ~20ms</li>
+						<li class="fragment">Fetching minor payloads from database ~2ms</li>
+						<li class="fragment">Rendering an erb template ~20ms</li>
+						<li class="fragment">Can add up pretty fast</li>
+						<li class="fragment">People solve this with caching (hard)</li>
+						<li class="fragment">Not the best concurrency scenario (unless jruby)</li>
+						<li class="fragment">Any alterantives?</li>
 					</ul>
 				</section>
 				<section>
@@ -75,9 +75,9 @@
 				<section>
 					<h2>So...</h2>
 					<ul>
-						<li>Phoenix (elixir) does most of what rails does at 10x the performance</li>
-						<li>Startram (crystal) has potential to do it at 50x the performance</li>
-						<li>Sub 100ms render should be easy - mission completed?</li>
+						<li class="fragment">Phoenix (elixir) does most of what rails does at 10x the performance</li>
+						<li class="fragment">Startram (crystal) has potential to do it at 50x the performance</li>
+						<li class="fragment">Sub 100ms render should be easy - mission completed?</li>
 					</ul>
 				</section>
 				<section data-background-video="videos/hyperdrive.mp4"></section>
@@ -94,21 +94,21 @@
 				<section>
 					<h2>Speed of Light, in theory</h2>
 					<ul>
-						<li>299,792km per second</li>
-						<li>Stockholm -> N. Virginia distance 7,000km</li>
-						<li>Should take 23ms</li>
-						<li>Stockholm -> Dublin distance 2,000km</li>
-						<li>Should take 6ms</li>
+						<li class="fragment">299,792km per second</li>
+						<li class="fragment">Stockholm -> N. Virginia distance 7,000km</li>
+						<li class="fragment">Should take 23ms</li>
+						<li class="fragment">Stockholm -> Dublin distance 2,000km</li>
+						<li class="fragment">Should take 6ms</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Speed of Light, in reality</h2>
 					<ul>
-						<li>Zig zagging infrastructure</li>
-						<li>Routers add latency</li>
-						<li>Light moves 30% slower in glass</li>
-						<li>Pinballing through the fiber</li>
-						<li>About twice as slow</li>
+						<li class="fragment">Zig zagging infrastructure</li>
+						<li class="fragment">Routers add latency</li>
+						<li class="fragment">Light moves 30% slower in glass</li>
+						<li class="fragment">Pinballing through the fiber</li>
+						<li class="fragment">About twice as slow</li>
 					</ul>
 					<aside class="notes">
 						Routers - like going through customs
@@ -119,9 +119,9 @@
 				<section>
 					<h2>Speed of Light, in practice</h2>
 					<ul>
-						<li>Ping Dublin ~50ms</li>
-						<li>Ping N. Virginia ~130ms</li>
-						<li>So what's up with 750ms?</li>
+						<li class="fragment">Ping Dublin ~50ms</li>
+						<li class="fragment">Ping N. Virginia ~130ms</li>
+						<li class="fragment">So what's up with 750ms?</li>
 					</ul>
 					<aside class="notes">
 						So we should
@@ -140,12 +140,12 @@
 				<section>
 					<h2>Speed of light, on https</h2>
 					<ul>
-						<li>4 round trips for first response</li>
-						<li>Similar handshakes for asset loading</li>
-						<li>VERY slow first render</li>
-						<li>Optimization 1: Browser will cache connections</li>
-						<li>Optimization 2: HTTP/2 requires only one connection</li>
-						<li>Still adds ~140ms roundtrip for each request</li>
+						<li class="fragment">4 round trips for first response</li>
+						<li class="fragment">Similar handshakes for asset loading</li>
+						<li class="fragment">VERY slow first render</li>
+						<li class="fragment">Optimization 1: Browser will cache connections</li>
+						<li class="fragment">Optimization 2: HTTP/2 requires only one connection</li>
+						<li class="fragment">Still adds ~140ms roundtrip for each request</li>
 					</ul>
 				</section>
 				<section>
@@ -165,17 +165,17 @@
 				<section>
 					<h2>Beating the speed of light</h2>
 					<ul>
-						<li>Optimistic Updates</li>
-						<li>Client side data caching</li>
-						<li>Websockets</li>
+						<li class="fragment">Optimistic Updates</li>
+						<li class="fragment">Client side data caching</li>
+						<li class="fragment">Websockets</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Challenges</h2>
 					<ul>
-						<li>Two way replication</li>
-						<li>Stateful servers</li>
-						<li>Persistent connections</li>
+						<li class="fragment">Two way replication</li>
+						<li class="fragment">Stateful servers</li>
+						<li class="fragment">Persistent connections</li>
 					</ul>
 					<aside class="notes">
 						If we never reload, how do we get fresh data?
@@ -186,21 +186,21 @@
 				<section>
 					<h2>Solutions</h2>
 					<ul>
-						<li>Meteor (the only complete package)</li>
-						<li>Phoenix (websocket pub/sub, massive scalability)</li>
-						<li>Relay (graphql + react with optimistic updates)</li>
-						<li>Firebase (cloud store with live queries)</li>
-						<li>Om (optimistic updates, coolest kid on the block)</li>
-						<li>Dato (ambitious clojurescript project)</li>
+						<li class="fragment">Meteor (the only complete package)</li>
+						<li class="fragment">Phoenix (websocket pub/sub, massive scalability)</li>
+						<li class="fragment">Relay (graphql + react with optimistic updates)</li>
+						<li class="fragment">Firebase (cloud store with live queries)</li>
+						<li class="fragment">Om (optimistic updates, coolest kid on the block)</li>
+						<li class="fragment">Dato (ambitious clojurescript project)</li>
 					</ul>
 				</section>
 				<section>
 					<h2>Scalability concerns</h2>
 					<ul>
-						<li>Sticky sessions</li>
-						<li>Paas might limit number of open connections</li>
-						<li>Live query computation is expensive (meteor)</li>
-						<li>Javascript isn't multi threaded and hard to optimize (node)</li>
+						<li class="fragment">Sticky sessions</li>
+						<li class="fragment">Paas might limit number of open connections</li>
+						<li class="fragment">Live query computation is expensive (meteor)</li>
+						<li class="fragment">Javascript isn't multi threaded and hard to optimize (node)</li>
 					</ul>
 					<aside class="notes">
 						Paas like heroku is known to handle 6000 connections per dyno
@@ -214,10 +214,10 @@
 				<section>
 					<h2>The best is yet to come</h2>
 					<ul>
-						<li>Doable but hard to be productive</li>
-						<li>Use Meteor or roll your own (not trivial)</li>
-						<li>Moving toward game style network programming</li>
-						<li>Isomorphic Clojure or Elixir might make for an optimal solution?</li>
+						<li class="fragment">Doable but hard to be productive</li>
+						<li class="fragment">Use Meteor or roll your own (not trivial)</li>
+						<li class="fragment">Game style network programming scales differently</li>
+						<li class="fragment">Isomorphic Clojure or Elixir might make for an optimal solution?</li>
 					</ul>
 				</section>
 				<section data-background-video="videos/actual-hyperdrive.mp4">
