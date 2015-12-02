@@ -7,10 +7,10 @@
 	<link rel="stylesheet" href="css/theme/black.css" id="theme">
 	<link rel="stylesheet" href="lib/css/zenburn.css">
 	<style>
-	.reveal .slides section .fragment {
-		opacity: 0.2;
-		visibility: visible;
-	}
+		.reveal .slides section .fragment {
+			opacity: 0.2;
+			visibility: visible;
+		}
 	</style>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
@@ -30,52 +30,67 @@
 				<section>
 					<h2>Percieved Performance</h2>
 					<ul>
-						<li class="fragment">0.1 sec - Instant</li>
+						<li class="fragment">&lt; 100ms - Instant</li>
 						<li class="fragment">&lt; 1 sec - Keep attention</li>
 						<li class="fragment">1-10 sec - WTF?</li>
-						<li class="fragment">&gt; 10 sec - Lost attention</li>
+						<li class="fragment">&gt; 10 sec - Rage Quit</li>
 					</ul>
 					<aside class="notes">
 						http://blog.teamtreehouse.com/perceived-performances
+
+						Basically we want to be sub 100ms
 					</aside>
 				</section>
 			</section>
 			<section>
 				<section>
-					<h1>Static Rendering</h1>
-					<p>Dreams of an old school backender</p>
+					<h1>Backend Performance</h1>
+					<img src="images/old-han-solo.jpg" alt="">
+					<p>Dreams of an old school rails dev</p>
 				</section>
 				<section>
 					<h2>Hypothesis</h2>
 					<ul>
 						<li class="fragment">Static rendering preferable over SPAs</li>
-						<li class="fragment">Write simple and testable code in your favourite language</li>
-						<li class="fragment">Leverage turbolinks to hide page/asset reload cycle</li>
-						<li class="fragment">Render to glass in < 100ms</li>
+						<li class="fragment">Write simple and testable code in our favourite languages</li>
+						<li class="fragment">SSR fast since less asset loading / api calls / spinners</li>
+						<li class="fragment">Leverage "turbolinks" to hide page/asset reload cycle</li>
+						<li class="fragment">Render as fast as possible (< 100ms)</li>
 					</ul>
+					<aside class="notes">
+						Also inspired by Honeybadger who went to SPA and back again...
+
+						So how fast can we render?
+					</aside>
 				</section>
 				<section>
 					<h2>Rails performance in general</h2>
 					<ul>
 						<li class="fragment">Middleware stack ~20ms</li>
-						<li class="fragment">Fetching minor payloads from database ~2ms</li>
-						<li class="fragment">Rendering an erb template ~20ms</li>
+						<li class="fragment">Fetching minor indexed documents from database ~2ms</li>
+						<li class="fragment">Rendering an erb template ~10-100ms</li>
 						<li class="fragment">Can add up pretty fast</li>
 						<li class="fragment">People solve this with caching (hard)</li>
 						<li class="fragment">Not the best concurrency scenario (unless jruby)</li>
-						<li class="fragment">Any alterantives?</li>
+						<li class="fragment">Can we do better?</li>
 					</ul>
+					<aside class="notes">
+						Note that middleware stack doesn't appear in logs.
+						Lots of dynamic content and helpers (or even database calls) in views will slow them down.
+					</aside>
 				</section>
 				<section>
 					<img src="images/framework-comparison.png" alt="">
 					<aside class="notes">
+						<p>Rails always put happiness and productivity over performance</p>
+
+						<p>Possible to get an order of magnitude better performance in compiled languages.</p>
+
+						<p>Express similar to ruby needs cluster to use multiple cores efficiently.</p>
+
+						<p>Mention Startram had almost phoenix performance using only one core.</p>
+
 						https://github.com/mroth/phoenix-showdown
-
-						So rails adds about 20ms to every production request (not seen in logs!).
-
-						Possible to get an order of magnitude better performance in compiled languages.
-
-						Realize that Ruby and Rails was always about sacrificing performance for developer happiness!
 					</aside>
 				</section>
 				<section>
@@ -83,12 +98,16 @@
 					<ul>
 						<li class="fragment">Phoenix (elixir) does most of what rails does at 10x the performance</li>
 						<li class="fragment">Startram (crystal) has potential to do it at 50x the performance</li>
-						<li class="fragment">Sub 100ms render should be easy - mission completed?</li>
+						<li class="fragment">Sub 100ms is easy, why don't we go for sub 1ms?</li>
+						<li class="fragment">Let's put it in the cloud and rejoice!</li>
 					</ul>
 				</section>
 				<section data-background-video="videos/hyperdrive.mp4"></section>
 				<section>
 					<img src="images/latency-1.png" alt="">
+					<aside class="notes">
+						Doing all the caching right we render in about 6ms so what the hell is this?
+					</aside>
 				</section>
 			</section>
 			<section>
@@ -106,6 +125,9 @@
 						<li class="fragment">Stockholm -> Dublin distance 2,000km</li>
 						<li class="fragment">Should take 6ms</li>
 					</ul>
+					<aside class="notes">
+						Doesn't look so bad...
+					</aside>
 				</section>
 				<section>
 					<h2>Speed of Light, in reality</h2>
@@ -130,17 +152,18 @@
 						<li class="fragment">So what's up with 750ms?</li>
 					</ul>
 					<aside class="notes">
-						So we should
+						<p>130ms not cool but what's up with 750ms?</p>
+
 						http://www.cloudping.info/
 					</aside>
 				</section>
 				<section>
 					<img src="images/latency-2.png" alt="">
 					<aside class="notes">
-						1x rt - you're not getting anything until we have encryption
-						2x rt - encryption handshake
-						1x rt - get actual server response
-						Wait for content
+						<p>1x rt - you're not getting anything until we have encryption</p>
+						<p>2x rt - encryption handshake</p>
+						<p>1x rt - get actual server response</p>
+						<p>Wait for content</p>
 					</aside>
 				</section>
 				<section>
@@ -166,10 +189,11 @@
 			<section>
 				<section>
 					<h1>Single Page Apps</h1>
+					<img src="images/nothing-will-stand-in-our-way.png" alt="">
 					<p>Nothing will stand in our way</p>
 				</section>
 				<section>
-					<h2>Beating the speed of light</h2>
+					<h2>Tricking the speed of light</h2>
 					<ul>
 						<li class="fragment">Optimistic Updates</li>
 						<li class="fragment">Client side data caching</li>
@@ -192,7 +216,7 @@
 				<section>
 					<h2>Solutions</h2>
 					<ul>
-						<li class="fragment">Meteor (the only complete package)</li>
+						<li class="fragment">Meteor (the only mature complete package)</li>
 						<li class="fragment">Phoenix (websocket pub/sub, massive scalability)</li>
 						<li class="fragment">Relay (graphql with optimistic updates)</li>
 						<li class="fragment">Firebase (cloud store with live queries)</li>
@@ -204,7 +228,7 @@
 					<h2>Scalability concerns</h2>
 					<ul>
 						<li class="fragment">Sticky sessions</li>
-						<li class="fragment">PaaS might limit number of open connections</li>
+						<li class="fragment">PaaS might limit number of persistent connections</li>
 						<li class="fragment">Live query computation is expensive (meteor)</li>
 						<li class="fragment">Javascript isn't multi threaded and hard to optimize (node)</li>
 					</ul>
@@ -216,6 +240,7 @@
 			<section>
 				<section>
 					<h1>Conclusion</h1>
+					<img src="images/yoda.jpg" alt="">
 				</section>
 				<section>
 					<h2>The best is yet to come</h2>
@@ -223,7 +248,9 @@
 						<li class="fragment">Doable but hard to be productive</li>
 						<li class="fragment">Use Meteor or roll your own (not trivial)</li>
 						<li class="fragment">Game style network programming scales differently</li>
+						<li class="fragment">Fast and concurrent backend more important than ever</li>
 						<li class="fragment">Isomorphic Clojure or Elixir might make for an optimal solution?</li>
+						<li class="fragment">It's not the dark side!</li>
 					</ul>
 				</section>
 				<section data-background-video="videos/actual-hyperdrive.mp4">
@@ -258,7 +285,7 @@
 		width: 1140,
     height: 900,
 		controls: true,
-		progress: true,
+		progress: false,
 		history: true,
 		center: true,
 
